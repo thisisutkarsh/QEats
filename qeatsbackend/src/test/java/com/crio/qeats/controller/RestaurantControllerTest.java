@@ -134,6 +134,7 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=10&longitude=181", uri.toString());
 
+
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -165,6 +166,7 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=10&longitue=20", uri.toString());
 
+
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -181,6 +183,7 @@ public class RestaurantControllerTest {
         .build().toUri();
 
     assertEquals(RESTAURANT_API_URI + "?laitude=10&longitude=20", uri.toString());
+
 
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)

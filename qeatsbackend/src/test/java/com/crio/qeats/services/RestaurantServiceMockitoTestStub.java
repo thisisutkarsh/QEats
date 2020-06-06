@@ -1,3 +1,4 @@
+
 package com.crio.qeats.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,7 +92,7 @@ public class RestaurantServiceMockitoTestStub {
     List<Restaurant> restaurantList2 = null;
 
     // TODO: CRIO_TASK_MODULE_MOCKITO
-    //  Initialize these two lists above such that I will match with the asssert statements
+    //  Initialize these two lists above such that I will match with the assert statements
     //  defined below.
 
 
