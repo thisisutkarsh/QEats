@@ -108,7 +108,6 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=91&longitude=20", uri.toString());
 
-    // calling api without latitude and longitude
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -123,7 +122,6 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=-91&longitude=20", uri.toString());
 
-    // calling api without latitude and longitude
     response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -142,7 +140,7 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=10&longitude=181", uri.toString());
 
-    // calling api without latitude and longitude
+
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -157,7 +155,7 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=10&longitude=-181", uri.toString());
 
-    // calling api without latitude and longitude
+    // calling api with invalid longitude
     response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -176,7 +174,7 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?latitude=10&longitue=20", uri.toString());
 
-    // calling api without latitude and longitude
+
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
@@ -195,7 +193,7 @@ public class RestaurantControllerTest {
 
     assertEquals(RESTAURANT_API_URI + "?laitude=10&longitude=20", uri.toString());
 
-    // calling api without latitude and longitude
+
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
     ).andReturn().getResponse();
