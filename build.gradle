@@ -35,7 +35,6 @@ ext {
     modelMapperVersion = "2.3.2"
 }
 
-buildDir = '/tmp/external_build'
 
 apply plugin: "idea"
 apply plugin: "checkstyle"
@@ -95,6 +94,10 @@ configurations {
 
 test {
     useJUnitPlatform()
+}
+
+allprojects {
+    buildDir = '/tmp/external_build'
 }
 
 subprojects {
