@@ -29,12 +29,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import redis.embedded.RedisServer;
 
 // TODO: CRIO_TASK_MODULE_NOSQL
 // Pass all the RestaurantRepositoryService test cases.
 // Make modifications to the tests if necessary.
 @SpringBootTest(classes = {QEatsApplication.class})
+@ActiveProfiles("test")
 public class RestaurantRepositoryServiceTest {
 
   private static final String FIXTURES = "fixtures/exchanges";
