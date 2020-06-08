@@ -98,6 +98,10 @@ test {
 
 allprojects {
     buildDir = '/tmp/external_build'
+    test {
+        testLogging.events ("STANDARD_ERROR")
+        testLogging.events ("STANDARD_OUT")
+    }
 }
 
 subprojects {
@@ -126,6 +130,10 @@ subprojects {
             html.enabled = true
         }
         useJUnitPlatform {
+        }
+        test {
+            testLogging.events ("STANDARD_ERROR")
+            testLogging.events ("STANDARD_OUT")
         }
         afterSuite { desc, result ->
             if (!desc.parent) {
