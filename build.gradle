@@ -131,10 +131,8 @@ subprojects {
         }
         useJUnitPlatform {
         }
-        test {
-            testLogging.events ("STANDARD_ERROR")
-            testLogging.events ("STANDARD_OUT")
-        }
+        testLogging.events ("STANDARD_ERROR")
+        testLogging.events ("STANDARD_OUT")
         afterSuite { desc, result ->
             if (!desc.parent) {
                 println "\nTEST RESULT: ${result.resultType}"
