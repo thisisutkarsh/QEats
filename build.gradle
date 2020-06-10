@@ -1,3 +1,5 @@
+import java.time.Duration
+
 /*
  *
  *  * Copyright (c) Crio.Do 2019. All rights reserved
@@ -92,10 +94,6 @@ configurations {
     }
 }
 
-test {
-    useJUnitPlatform()
-}
-
 allprojects {
     buildDir = '/tmp/external_build'
     test {
@@ -142,6 +140,7 @@ subprojects {
                         "${result.skippedTestCount} SKIPPED"
             }
         }
+        timeout = Duration.ofMinutes(15)
     }
 
     checkstyle {
