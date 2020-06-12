@@ -81,17 +81,14 @@ spotbugs {
     sourceSets = [sourceSets.main]
 }
 
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        html.enabled false
-        xml.enabled true
-    }
-}
-
 configurations {
     all {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 allprojects {
@@ -99,6 +96,12 @@ allprojects {
     test {
         testLogging.events ("STANDARD_ERROR")
         testLogging.events ("STANDARD_OUT")
+    }
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
+        reports {
+            html.enabled true
+            xml.enabled false
+        }
     }
 }
 
