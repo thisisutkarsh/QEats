@@ -9,7 +9,7 @@ import java.time.Duration
 //////////////////////////////// DO NOT CHANGE THIS FILE //////////////////////////////////
 
 plugins {
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'jacoco'
     id 'java'
     id 'com.github.spotbugs' version '4.5.0'
