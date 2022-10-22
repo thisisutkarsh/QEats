@@ -46,9 +46,23 @@ import lombok.NoArgsConstructor;
 //      ]
 //    }
 //  ]
+
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class GetRestaurantsResponse {
+	private List<Restaurant> restaurants;
+
+	public List<Restaurant> getRestaurants() {
+		return restaurants;
+	}
+
+    public GetRestaurantsResponse(List<Restaurant> restaurants) {
+		this.restaurants = restaurants;
+	}
+
+	public void setRestaurants(List<Restaurant> restaurants) {
+		this.restaurants = restaurants;
+	}
 
 }
 

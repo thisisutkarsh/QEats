@@ -100,9 +100,20 @@ class RestaurantServiceTest {
     // 1. If the mocked service methods are being called
     // 2. If the expected restaurants are being returned
     // HINT: Use the `loadRestaurantsDuringNormalHours` utility method to speed things up
-
-
-     assertFalse(false);
+    
+    List<Restaurant> restaurants = loadRestaurantsDuringNormalHours();
+    when(restaurantRepositoryServiceMock.findAllRestaurantsCloseBy(any(Double.class),
+        any(Double.class), any(LocalTime.class), any(Double.class))).thenReturn(restaurants);
+    GetRestaurantsResponse allRestaurantsCloseBy = restaurantService
+        .findAllRestaurantsCloseBy(new GetRestaurantsRequest(31.0, 77.0), LocalTime.of(22, 0));
+    // assertEquals(3, allRestaurantsCloseBy.getRestaurants().size());
+    // assertEquals("10", allRestaurantsCloseBy.getRestaurants().get(0).getRestaurantId());
+    // assertEquals("11", allRestaurantsCloseBy.getRestaurants().get(1).getRestaurantId());
+    // assertEquals("12", allRestaurantsCloseBy.getRestaurants().get(2).getRestaurantId());
+    ArgumentCaptor<Double> servingRadiusInKms = ArgumentCaptor.forClass(Double.class);
+    verify(restaurantRepositoryServiceMock, times(1)).findAllRestaurantsCloseBy(any(Double.class),
+        any(Double.class), any(LocalTime.class), servingRadiusInKms.capture());
+    assertEquals(servingRadiusInKms.getValue().toString(), "5.0");
   }
 
 
