@@ -37,64 +37,61 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-
-@Service
 @Primary
+@Service
 public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryService {
 
+	@Autowired // (required = true)
+	private ModelMapper modelMapper;
 
+	@Autowired
+	private RestaurantRepository restaurantRepository;
 
-  @Autowired
-  private MongoTemplate mongoTemplate;
+	private boolean isOpenNow(LocalTime time, RestaurantEntity res) {
+		LocalTime openingTime = LocalTime.parse(res.getOpensAt());
+		LocalTime closingTime = LocalTime.parse(res.getClosesAt());
 
-  @Autowired
-  private Provider<ModelMapper> modelMapperProvider;
+		return time.isAfter(openingTime) && time.isBefore(closingTime);
+	}
 
-  private boolean isOpenNow(LocalTime time, RestaurantEntity res) {
-    LocalTime openingTime = LocalTime.parse(res.getOpensAt());
-    LocalTime closingTime = LocalTime.parse(res.getClosesAt());
+	public List<Restaurant> findAllRestaurantsCloseBy(Double latitude, Double longitude,
+			LocalTime currentTime, Double servingRadiusInKms) {
 
-    return time.isAfter(openingTime) && time.isBefore(closingTime);
-  }
+		List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
 
-  // TODO: CRIO_TASK_MODULE_NOSQL
-  // Objectives:
-  // 1. Implement findAllRestaurantsCloseby.
-  // 2. Remember to keep the precision of GeoHash in mind while using it as a key.
-  // Check RestaurantRepositoryService.java file for the interface contract.
-  
-  public List<Restaurant> findAllRestaurantsCloseBy(Double latitude, Double longitude,
-      LocalTime currentTime, Double servingRadiusInKms) {
+		List<Restaurant> restaurants = new ArrayList<>();
 
-    ModelMapper modelMapper = modelMapperProvider.get();
-    List<RestaurantEntity> mongoRestaurants = mongoTemplate.findAll(RestaurantEntity.class);
-    List<Restaurant> restaurants = new ArrayList<Restaurant>();
-    for (RestaurantEntity t : mongoRestaurants) {
-      if (isRestaurantCloseByAndOpen(t, currentTime, latitude, longitude, servingRadiusInKms)) {
-        restaurants.add(modelMapper.map(t, Restaurant.class));
-      }
-    }
-    return restaurants;
-  }
+		for (RestaurantEntity restaurantEntity : restaurantEntities) {
+			if (isRestaurantCloseByAndOpen(restaurantEntity, currentTime, latitude, longitude,
+					servingRadiusInKms)) {
+				restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+			}
+		}
 
-  // TODO: CRIO_TASK_MODULE_NOSQL
-  // Objective:
-  // 1. Check if a restaurant is nearby and open. If so, it is a candidate to be returned.
-  // NOTE: How far exactly is "nearby"?
+		return restaurants;
+	}
 
-  /**
-   * Utility method to check if a restaurant is within the serving radius at a given time.
-   * 
-   * @return boolean True if restaurant falls within serving radius and is open, false otherwise
-   */
-  private boolean isRestaurantCloseByAndOpen(RestaurantEntity restaurantEntity,
-      LocalTime currentTime, Double latitude, Double longitude, Double servingRadiusInKms) {
-    if (isOpenNow(currentTime, restaurantEntity)) {
-      return GeoUtils.findDistanceInKm(latitude, longitude, restaurantEntity.getLatitude(),
-          restaurantEntity.getLongitude()) < servingRadiusInKms;
-    }
+	private boolean isRestaurantCloseByAndOpen(RestaurantEntity restaurantEntity,
+			LocalTime currentTime, Double latitude, Double longitude, Double servingRadiusInKms) {
 
-    return false;
-  }
+		if (isOpenNow(currentTime, restaurantEntity)) {
+			return GeoUtils.findDistanceInKm(latitude, longitude, restaurantEntity.getLatitude(),
+					restaurantEntity.getLongitude()) < servingRadiusInKms;
+		}
+
+		return false;
+	}
+
+	public List<Restaurant> getAllRestaurants() {
+		List<RestaurantEntity> restaurantEntities = restaurantRepository.findAll();
+
+		List<Restaurant> restaurants = new ArrayList<>();
+
+		for (RestaurantEntity restaurantEntity : restaurantEntities) {
+			restaurants.add(modelMapper.map(restaurantEntity, Restaurant.class));
+		}
+
+		return restaurants;
+	}
 
 }
