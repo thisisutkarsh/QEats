@@ -14,16 +14,15 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+@Service
 public class RestaurantRepositoryServiceDummyImpl implements RestaurantRepositoryService {
   private static final String FIXTURES = "fixtures/exchanges";
   private ObjectMapper objectMapper = new ObjectMapper();
 
   private List<Restaurant> loadRestaurantsDuringNormalHours() throws IOException {
-    String fixture =
-        FixtureHelpers.fixture(FIXTURES + "/normal_hours_list_of_restaurants.json");
+    String fixture = FixtureHelpers.fixture(FIXTURES + "/normal_hours_list_of_restaurants.json");
 
-    return objectMapper.readValue(fixture, new TypeReference<List<Restaurant>>() {
-    });
+    return objectMapper.readValue(fixture, new TypeReference<List<Restaurant>>() {});
   }
 
   // TODO: CRIO_TASK_MODULE_RESTAURANTSAPI - Use this dummy implementation.

@@ -63,7 +63,4 @@ public class GetRestaurantsResponse {
 	public void setRestaurants(List<Restaurant> restaurants) {
 		this.restaurants = restaurants;
 	}
-
 }
-
-// }
